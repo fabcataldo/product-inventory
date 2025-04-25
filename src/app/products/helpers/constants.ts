@@ -1,0 +1,1 @@
+export const PAGE_SIZE_GET_ALL_PRODUCTS = 10;
