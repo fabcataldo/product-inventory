@@ -6,22 +6,19 @@ import { AppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffects } from 'src/store/products/products.effects';
 import { productsReducer } from 'src/store/products/products.reducer';
-import { CategoriesModule } from './categories/categories.module';
-import { ProductsModule } from './products/products.module';
-import { OperationsModule } from './operations/operations.module';
+import { dashboardReducer } from 'src/store/dashboard/dashboard.reducer';
+import { DashboardEffects } from 'src/store/dashboard/dashboard.effects';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CategoriesModule,
-    ProductsModule,
-    OperationsModule,
     StoreModule.forRoot({
       products: productsReducer,
+      dashboard: dashboardReducer,
     }),
-    EffectsModule.forRoot([ProductsEffects]),
+    EffectsModule.forRoot([ProductsEffects, DashboardEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

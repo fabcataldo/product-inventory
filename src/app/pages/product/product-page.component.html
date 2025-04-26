@@ -1,0 +1,30 @@
+<button mat-button class="btn btn-light mt-4" (click)="goBack()">← Back</button>
+<ng-template [ngIf]="loading" [ngIfElse]="contentLoaded">
+  <skeleton></skeleton>
+</ng-template>
+
+<ng-template #contentLoaded>
+  <ng-template
+    [ngIf]="isEditingProduct || isAddingProduct"
+    [ngIfElse]="detailOnly"
+  >
+    <product-form [product]="product"></product-form>
+  </ng-template>
+
+  <ng-template #detailOnly>
+    <div class="surface-card p-4 border-round w-full h-full mb-5">
+      <span class="font-semibold">Producto</span>
+      <product-detail [product]="product"></product-detail>
+    </div>
+
+    <div
+      class="surface-card p-4 border-round w-full h-full"
+      *ngIf="product?.operations || product?.operations?.length"
+    >
+      <span class="font-semibold">Movimientos</span>
+      <operations-list
+        [productOperations]="product!.operations"
+      ></operations-list>
+    </div>
+  </ng-template>
+</ng-template>

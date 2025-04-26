@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryTreeComponent } from './components/category-tree/category-tree/category-tree.component';
+import { CategoriesService } from './services/categories.service';
 
 @NgModule({
-  declarations: [CategoryTreeComponent],
+  declarations: [],
   imports: [CommonModule],
+  providers: [CategoriesService],
 })
 export class CategoriesModule {}

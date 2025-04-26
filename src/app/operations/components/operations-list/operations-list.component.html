@@ -1,1 +1,18 @@
-<p>operations-list works!</p>
+<p-table [value]="productOperations!" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Id</th>
+      <th>Tipo</th>
+      <th>Fecha</th>
+      <th>Descripción</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-operation>
+    <tr>
+      <td>{{ operation.id }}</td>
+      <td>{{ operation.operationType.name }}</td>
+      <td>{{ operation.timestamp }}</td>
+      <td>{{ operation.description }}</td>
+    </tr>
+  </ng-template>
+</p-table>

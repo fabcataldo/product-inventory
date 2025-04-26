@@ -1,1 +1,48 @@
-<p>product-form works!</p>
+<div class="container d-flex justify-content-center p-5">
+  <form [formGroup]="productForm" class="mb-3" (submit)="onSubmit($event)">
+    <div class="field">
+      <label for="nameFormControl">Nombre </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="name"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+
+    <div class="field">
+      <label for="stockFormControl">Stock </label>
+      <input
+        type="number"
+        pInputText
+        formControlName="stock"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+
+    <div class="field">
+      <label for="priceFormControl">Precio </label>
+      <input
+        type="number"
+        pInputText
+        formControlName="price"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+
+    <div class="field">
+      <label for="categoriesFormControl">Categorías </label>
+      <p-treeSelect
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        containerStyleClass="w-full"
+        formControlName="category"
+        [options]="categoriesTree"
+        placeholder="Selecciona categoria/s"
+      ></p-treeSelect>
+    </div>
+
+    <div class="flex justify-content-end">
+      <p-button label="Guardar" [loading]="loadingSubmitButton"></p-button>
+    </div>
+  </form>
+</div>

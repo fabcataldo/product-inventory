@@ -1,1 +1,72 @@
-<p>products-list works!</p>
+<div class="mt-2 container justify-content-center background">
+  <div class="d-flex mt-4">
+    <div class="col-2">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        (click)="goToCreateProductPage()"
+      >
+        Add Hero
+      </button>
+    </div>
+
+    <div class="col-3 custom-search-input">
+      <input
+        #searchInputByCategory
+        type="text"
+        class="form-control"
+        id="searchInputByCategory"
+        [value]="productSearchedByCategory"
+        placeholder="Search Product By Category..."
+      />
+    </div>
+  </div>
+
+  <p-table
+    [value]="localProducts"
+    [paginator]="true"
+    [lazy]="true"
+    [loading]="loading"
+    [rows]="pageSize"
+    [first]="currentPage * pageSize"
+    [totalRecords]="totalProducts"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    (onPage)="onPageChange($event)"
+    [rowsPerPageOptions]="[5, 10, 25, 100]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 25%">Name</th>
+        <th style="width: 25%">Price</th>
+        <th style="width: 25%">Stock</th>
+        <th style="width: 25%">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+          <button
+            aria-label="detail button"
+            (click)="goToDetailPage(product.id)"
+          >
+            <i class="pi pi-info-circle"></i>
+          </button>
+          <button aria-label="edit button" (click)="goToEditPage(product.id)">
+            <i class="pi pi-pencil"></i>
+          </button>
+          <button
+            aria-label="delete button"
+            (click)="showDeleteModal(product.id)"
+          >
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

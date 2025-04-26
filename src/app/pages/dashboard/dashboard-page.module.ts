@@ -3,15 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardPageRoutingModule } from './dashboard-page-routing.module';
 import { DashboardPageComponent } from './dashboard-page.component';
-
+import { SharedComponentsModule } from 'src/app/shared/shared-components.module';
 
 @NgModule({
-  declarations: [
-    DashboardPageComponent
-  ],
-  imports: [
-    CommonModule,
-    DashboardPageRoutingModule
-  ]
+  declarations: [DashboardPageComponent],
+  imports: [CommonModule, DashboardPageRoutingModule, SharedComponentsModule],
 })
-export class DashboardPageModule { }
+export class DashboardPageModule {}

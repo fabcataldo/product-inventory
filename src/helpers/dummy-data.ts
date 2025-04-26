@@ -39,7 +39,7 @@ export const categories = [
   },
 ];
 
-export const products = [
+export let products = [
   {
     id: 1,
     name: 'Stay Amortiguador',
@@ -40255,3 +40255,15 @@ export const products = [
     ],
   },
 ];
+
+export const totalProducts = products.length;
+export const lowStockProducts = products
+  .filter((product) => product.stock < 5)
+  .map((p) => ({
+    product: p,
+    stock: p.stock,
+  }));
+export const totalInventoryValue = products.reduce(
+  (acc, currProd) => acc + currProd.stock * currProd.price,
+  0
+);

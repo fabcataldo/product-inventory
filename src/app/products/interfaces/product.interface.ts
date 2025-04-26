@@ -6,6 +6,6 @@ export interface Product {
   name: string;
   stock: number;
   price: number;
-  categories: Category[];
-  operations: Operation[];
+  categories?: Category[];
+  operations?: Operation[];
 }

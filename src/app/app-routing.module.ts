@@ -17,6 +17,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'product-detail',
+    loadChildren: () =>
+      import('./pages/product/product-page.module').then(
+        (m) => m.ProductPageModule
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'dashboard',
   },

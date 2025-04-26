@@ -1,6 +1,8 @@
 import { Product } from './product.interface';
 
-export interface ProductApiResponse {
+export interface ProductsByCategoryApiResponse {
   products: Product[];
   totalProducts: number;
+  pageSize: number;
+  currentPage: number;
 }

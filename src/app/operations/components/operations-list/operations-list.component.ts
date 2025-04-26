@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Operation } from '../../interfaces/operation.interface';
 
 @Component({
-  selector: 'app-operations-list',
+  selector: 'operations-list',
   templateUrl: './operations-list.component.html',
-  styleUrls: ['./operations-list.component.css']
+  styleUrls: ['./operations-list.component.css'],
 })
 export class OperationsListComponent implements OnInit {
+  @Input() productOperations: Operation[] | undefined = [];
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
