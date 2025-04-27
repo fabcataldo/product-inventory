@@ -8,7 +8,7 @@
     [ngIf]="isEditingProduct || isAddingProduct"
     [ngIfElse]="detailOnly"
   >
-    <product-form [product]="product"></product-form>
+    <product-form></product-form>
   </ng-template>
 
   <ng-template #detailOnly>
