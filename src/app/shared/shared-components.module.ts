@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
 import { ButtonModule } from 'primeng/button';
+import { MenubarComponent } from './components/menubar/menubar.component';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
-  declarations: [SkeletonComponent],
-  imports: [CommonModule, SkeletonModule, ButtonModule],
-  exports: [SkeletonComponent, ButtonModule],
+  declarations: [SkeletonComponent, MenubarComponent],
+  imports: [CommonModule, SkeletonModule, ButtonModule, MenubarModule],
+  exports: [SkeletonComponent, ButtonModule, MenubarComponent],
 })
 export class SharedComponentsModule {}
