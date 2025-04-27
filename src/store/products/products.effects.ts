@@ -66,8 +66,8 @@ export class ProductsEffects {
       mergeMap(({ product }) =>
         this.productsService.addProduct(product).pipe(
           map((productsApi) =>
-            ProductActions.loadProductSuccess({
-              product: productsApi as Product,
+            ProductActions.addProductSuccess({
+              product: null,
             })
           ),
           catchError((error) =>
@@ -88,7 +88,7 @@ export class ProductsEffects {
         this.productsService.updateProduct(product).pipe(
           map((productsApi) =>
             ProductActions.editProductSuccess({
-              product: productsApi as Product,
+              product: null,
             })
           ),
           catchError((error) =>
