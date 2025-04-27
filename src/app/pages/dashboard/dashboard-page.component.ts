@@ -25,7 +25,6 @@ export class DashboardPageComponent implements OnInit {
     this.store
       .select((state) => state)
       .subscribe((resp) => {
-        console.log(resp);
         this.loading = false;
         this.totalProducts = resp.dashboard.totalProducts;
         this.lowStockProducts = resp.dashboard.lowStockProducts;
