@@ -31,18 +31,25 @@
     </div>
 
     <div class="field">
-      <label for="categoriesFormControl">Categorías </label>
+      <label for="categoriesFormControl">Categorías</label>
       <p-treeSelect
         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
         containerStyleClass="w-full"
         formControlName="category"
         [options]="categoriesTree"
         placeholder="Selecciona categoria/s"
+        display="chip"
+        [metaKeySelection]="false"
+        selectionMode="multiple"
       ></p-treeSelect>
     </div>
 
     <div class="flex justify-content-end">
-      <p-button label="Guardar" [loading]="loadingSubmitButton"></p-button>
+      <p-button
+        label="Guardar"
+        type="submit"
+        [loading]="loadingSubmitButton"
+      ></p-button>
     </div>
   </form>
 </div>

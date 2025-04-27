@@ -1,5 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TreeNode } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -24,38 +26,50 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   loading = false;
   loadingSubmitButton = false;
   addEditProduct$: Observable<any>;
+  categoriesSelected: any;
+  lastProductId = 0;
 
   constructor(
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private location: Location
   ) {
     this.addEditProduct$ = this.store.select((state) => state.products);
     this.productForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
       stock: [0, [Validators.required, Validators.min(0)]],
       price: [0, [Validators.required, Validators.min(0)]],
-      category: [''],
+      category: [],
+    });
+    this.productForm.controls['category'].valueChanges.subscribe((value) => {
+      this.categoriesSelected = value;
     });
     this.addEditProduct$
       .pipe(takeUntil(this.subscriptions$))
       .subscribe((productsState) => {
         if (productsState) {
           this.loading = false;
-          this.product = productsState.product;
-          if (this.product) {
+          this.lastProductId = productsState.allProducts.totalProducts;
+          if (!!productsState.product) {
+            this.product = productsState.product! as Product;
             this.productForm.setValue({
               name: this.product.name,
               stock: this.product.stock,
               price: this.product.price,
-              category: this.product.categories,
+              category:
+                this.product.categories?.length === 0
+                  ? []
+                  : this.categoriesToCategoriesTreeMapper(
+                      this.product.categories!
+                    ),
             });
           }
         }
       });
   }
   ngOnDestroy(): void {
-    this.productForm.reset();
+    this.resetValues();
     this.subscriptions$.next();
     this.subscriptions$.complete();
   }
@@ -77,17 +91,46 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         operations: [],
         categories: [],
       };
+      productForSave.id = this.product?.id
+        ? this.product!.id
+        : this.lastProductId;
       productForSave.name = this.productForm.get('name')?.value;
       productForSave.price = this.productForm.get('price')?.value;
       productForSave.stock = this.productForm.get('stock')?.value;
-      productForSave.categories = this.productForm.get('category')?.value;
+
+      const finalValue = this.productForm.controls['category'].value.map(
+        (category: any) => ({
+          id: Number(category.key),
+          name: category.label,
+          subcategories: category.children.map((child: any) => ({
+            id: Number(child.key.split('-')[1]),
+            name: child.label,
+          })),
+        })
+      );
+
+      productForSave.categories = finalValue;
       productForSave.operations = [];
+
       if (!this.product) {
         this.store.dispatch(addProduct({ product: productForSave }));
       } else {
         this.store.dispatch(editProduct({ product: productForSave }));
       }
+      this.resetValues();
+      this.location.back();
     }
+  }
+
+  private resetValues() {
+    this.loadingSubmitButton = false;
+    this.productForm.reset({
+      name: '',
+      stock: 0,
+      price: 0,
+      category: [],
+    });
+    this.categoriesSelected = null;
   }
 
   private buildCategoriesTree() {
@@ -98,10 +141,10 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (categoriesApi) => {
           this.categoriesTree = categoriesApi.map((category: Category) => ({
-            key: `category-${category.id}`,
+            key: `${category.id}`,
             label: category.name,
             children: category.subcategories.map((sub: SubCategory) => ({
-              key: `subcategory-${sub.id}`,
+              key: `${category.id}-${sub.id}`,
               label: sub.name,
             })),
           }));
@@ -111,5 +154,16 @@ export class ProductFormComponent implements OnInit, OnDestroy {
           console.log(err);
         },
       });
+  }
+
+  private categoriesToCategoriesTreeMapper(categories: Category[]) {
+    return categories.map((category: Category) => ({
+      key: `${category.id}`,
+      label: category.name,
+      children: category.subcategories.map((sub: SubCategory) => ({
+        key: `${category.id}-${sub.id}`,
+        label: sub.name,
+      })),
+    }));
   }
 }
