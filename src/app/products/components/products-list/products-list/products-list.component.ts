@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   Input,
@@ -10,7 +11,15 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  fromEvent,
+  map,
+  Observable,
+  Subject,
+  takeUntil,
+} from 'rxjs';
 import { PAGE_SIZE_GET_ALL_PRODUCTS } from 'src/app/products/helpers/constants';
 import { ProductsByCategoryApiResponse } from 'src/app/products/interfaces/products-by-category-api.response';
 import { Product } from 'src/app/products/interfaces/product.interface';
@@ -25,13 +34,14 @@ import { ProductsState } from 'src/store/products/products.reducer';
 import { ProductsApiResponse } from 'src/app/products/interfaces/products-api.response';
 import { Router } from '@angular/router';
 import { AppState } from 'src/app/shared/interfaces/app-state.interface';
+import { activateAddProduct } from '../../../../../store/products/products.actions';
 
 @Component({
   selector: 'products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.css'],
 })
-export class ProductsListComponent implements OnInit, OnDestroy {
+export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | null = null;
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   @ViewChild('searchInputByCategory') searchInputByCategory!: ElementRef;
@@ -45,9 +55,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name', 'price', 'stock', 'actions'];
 
   totalProducts = 0;
-  productSearchedByName = '';
   productSearchedByCategory = '';
-  dataSource = new MatTableDataSource<Product>([]);
+  dataSource: Product[] = [];
   subscriptions$ = new Subject<void>();
   filteredProducts: Product[] = [];
   localProducts: Product[] = [];
@@ -63,9 +72,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
           this.localProducts = allProducts.products;
           this.totalProducts = allProducts.totalProducts;
           this.updateTableDataSource();
-
-          console.log('allProducts');
-          console.log(allProducts);
           this.backupedPageSize = this.pageSize;
           this.backupedCurrentPage = this.currentPage;
           this.backupedTotalProducts = this.totalProducts;
@@ -79,6 +85,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.productsByCategory$
       .pipe(takeUntil(this.subscriptions$))
       .subscribe((response) => {
+        console.log('loadProductsByCategorySuccess');
+        console.log(response);
         if (response) {
           this.loading = false;
           this.filteredProducts = response.products;
@@ -97,6 +105,19 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getProducts();
+  }
+
+  ngAfterViewInit() {
+    fromEvent<Event>(this.searchInputByCategory.nativeElement, 'input')
+      .pipe(
+        debounceTime(300),
+        map((event: Event) => (event.target as HTMLInputElement).value),
+        distinctUntilChanged()
+      )
+      .subscribe((value) => {
+        this.productSearchedByCategory = value;
+        this.applyFilter();
+      });
   }
 
   getProducts() {
@@ -120,12 +141,14 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   showDeleteModal(id: number) {}
 
   updateTableDataSource(isFiltering?: boolean) {
-    this.dataSource = new MatTableDataSource(
-      isFiltering ? this.filteredProducts : this.localProducts
-    );
+    console.log('isFiltering');
+    console.log(isFiltering);
+    this.dataSource = isFiltering ? this.filteredProducts : this.localProducts;
   }
 
   applyFilter(): void {
+    console.log('productSearchedByCategory');
+    console.log(this.productSearchedByCategory);
     if (!this.productSearchedByCategory.length) {
       this.pageSize = this.backupedPageSize;
       this.currentPage = this.backupedCurrentPage;
@@ -143,7 +166,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  goToCreateProductPage() {}
+  goToCreateProductPage() {
+    this.store.dispatch(activateAddProduct({ isAdding: true }));
+    this.router.navigate(['/product-detail']);
+  }
 
   onPageChange(event: any) {
     console.log('event');

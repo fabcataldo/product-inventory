@@ -1,29 +1,28 @@
 <div class="mt-2 container justify-content-center background">
-  <div class="d-flex mt-4">
+  <div class="flex mt-4 justify-content-between">
     <div class="col-2">
-      <button
-        class="btn btn-primary"
+      <p-button
+        label="Agregar Producto"
         type="submit"
         (click)="goToCreateProductPage()"
       >
-        Add Hero
-      </button>
+      </p-button>
     </div>
 
-    <div class="col-3 custom-search-input">
+    <div class="flex col-3 custom-search-input">
       <input
         #searchInputByCategory
         type="text"
-        class="form-control"
         id="searchInputByCategory"
         [value]="productSearchedByCategory"
-        placeholder="Search Product By Category..."
+        placeholder="Buscar producto por categoría..."
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
       />
     </div>
   </div>
 
   <p-table
-    [value]="localProducts"
+    [value]="dataSource"
     [paginator]="true"
     [lazy]="true"
     [loading]="loading"
@@ -34,14 +33,15 @@
     [tableStyle]="{ 'min-width': '50rem' }"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     (onPage)="onPageChange($event)"
-    [rowsPerPageOptions]="[5, 10, 25, 100]"
+    [rowsPerPageOptions]="[10, 25, 100]"
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 25%">Name</th>
-        <th style="width: 25%">Price</th>
-        <th style="width: 25%">Stock</th>
-        <th style="width: 25%">Actions</th>
+        <th style="width: 25%">Nombre</th>
+        <th style="width: 25%">Precio</th>
+        <th style="width: 25%">Stock Actual</th>
+        <th style="width: 25%">Categorías</th>
+        <th style="width: 25%">Acciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
@@ -49,6 +49,15 @@
         <td>{{ product.name }}</td>
         <td>{{ product.price | currency }}</td>
         <td>{{ product.stock }}</td>
+        <td>
+          <li *ngFor="let category of product.categories">
+            <ul>
+              {{
+                category.name
+              }}
+            </ul>
+          </li>
+        </td>
         <td>
           <button
             aria-label="detail button"
