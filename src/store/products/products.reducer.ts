@@ -3,7 +3,6 @@ import { Product } from 'src/app/products/interfaces/product.interface';
 import * as ProductActions from './products.actions';
 import { ProductsByCategoryApiResponse } from 'src/app/products/interfaces/products-by-category-api.response';
 import { ProductsApiResponse } from 'src/app/products/interfaces/products-api.response';
-import { products } from '../../helpers/dummy-data';
 
 export interface ProductsState {
   allProducts: ProductsApiResponse | null;
