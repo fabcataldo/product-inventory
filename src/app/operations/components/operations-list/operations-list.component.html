@@ -11,7 +11,7 @@
     <tr>
       <td>{{ operation.id }}</td>
       <td>{{ operation.operationType.name }}</td>
-      <td>{{ operation.timestamp }}</td>
+      <td>{{ operation.timestamp | formatDate }}</td>
       <td>{{ operation.description }}</td>
     </tr>
   </ng-template>
