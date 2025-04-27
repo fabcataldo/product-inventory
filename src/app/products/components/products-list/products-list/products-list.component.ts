@@ -170,10 +170,8 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onPageChange(event: any) {
-    console.log('event');
-    console.log(event);
     this.pageSize = event.rows;
-    this.currentPage = event.first;
+    this.currentPage = event.first / event.rows;
     this.totalProducts = this.filteredProducts
       ? this.backupedTotalProducts
       : this.totalProducts;
