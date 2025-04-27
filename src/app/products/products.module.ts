@@ -6,6 +6,7 @@ import { ProductComponent } from './components/product/product.component';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { ProductFormModule } from './components/product-form/product-form/product-form.module';
+import { SharedComponentsModule } from '../shared/shared-components.module';
 
 @NgModule({
   declarations: [ProductsListComponent, ProductComponent],
@@ -15,7 +16,13 @@ import { ProductFormModule } from './components/product-form/product-form/produc
     ButtonModule,
     TableModule,
     ProductFormModule,
+    SharedComponentsModule,
   ],
-  exports: [ProductsListComponent, ProductFormModule, ProductComponent],
+  exports: [
+    ProductsListComponent,
+    ProductFormModule,
+    ProductComponent,
+    SharedComponentsModule,
+  ],
 })
 export class ProductsModule {}

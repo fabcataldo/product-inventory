@@ -8,6 +8,7 @@ import { ProductsEffects } from 'src/store/products/products.effects';
 import { productsReducer } from 'src/store/products/products.reducer';
 import { dashboardReducer } from 'src/store/dashboard/dashboard.reducer';
 import { DashboardEffects } from 'src/store/dashboard/dashboard.effects';
+import { SharedComponentsModule } from './shared/shared-components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { DashboardEffects } from 'src/store/dashboard/dashboard.effects';
       dashboard: dashboardReducer,
     }),
     EffectsModule.forRoot([ProductsEffects, DashboardEffects]),
+    SharedComponentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
