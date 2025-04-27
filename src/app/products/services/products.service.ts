@@ -20,8 +20,6 @@ export class ProductsService {
           pageStartIdx,
           pageEndIdx
         );
-        console.log('allProductsSlice');
-        console.log(allProductsSlice);
         return of({
           products: allProductsSlice,
           totalProducts: allProducts.length,
@@ -39,7 +37,6 @@ export class ProductsService {
         const product = products.find(
           (product) => product.id === id
         ) as Product;
-
         if (product) {
           return of(product);
         } else {
@@ -65,7 +62,6 @@ export class ProductsService {
         const productIdx = products.findIndex(
           (p) => p.id === product.id
         ) as number;
-
         if (productIdx >= 0) {
           products[productIdx] = product;
           return of(product);
