@@ -3,6 +3,7 @@ import { Product } from 'src/app/products/interfaces/product.interface';
 import * as ProductActions from './products.actions';
 import { ProductsByCategoryApiResponse } from 'src/app/products/interfaces/products-by-category-api.response';
 import { ProductsApiResponse } from 'src/app/products/interfaces/products-api.response';
+import { products } from '../../helpers/dummy-data';
 
 export interface ProductsState {
   allProducts: ProductsApiResponse | null;
@@ -50,7 +51,7 @@ export const productsReducer = createReducer(
     ...state,
     loading: true,
     error: null,
-    product,
+    products: product,
   })),
   on(ProductActions.removeProduct, (state, { product }) => ({
     ...state,
@@ -112,5 +113,11 @@ export const productsReducer = createReducer(
   on(ProductActions.activateAddProduct, (state, { isAdding }) => ({
     ...state,
     isAddingProduct: isAdding,
+  })),
+  on(ProductActions.resetProduct, (state) => ({
+    ...state,
+    isEditingProduct: false,
+    isAddingProduct: false,
+    product: null,
   }))
 );
