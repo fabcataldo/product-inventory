@@ -19,8 +19,6 @@ export class ProductPageComponent implements OnInit {
   ngOnInit(): void {
     this.loading = true;
     this.store.subscribe((store) => {
-      console.log('store');
-      console.log(store);
       if (store) {
         this.loading = false;
         this.product = this.isAddingProduct ? null : store.products!.product!;
