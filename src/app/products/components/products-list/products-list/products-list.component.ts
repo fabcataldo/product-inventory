@@ -130,8 +130,6 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/product-detail']);
   }
 
-  goToUpdateCategory(id: number) {}
-
   goToEditPage(id: number) {
     this.store.dispatch(loadProduct({ id: id }));
     this.store.dispatch(activateEditProduct({ isEditing: true }));
