@@ -8,7 +8,7 @@ import { SubCategory } from 'src/app/categories/interfaces/subcategory.interface
 import { CategoriesService } from 'src/app/categories/services/categories.service';
 import { Product } from 'src/app/products/interfaces/product.interface';
 import { AppState } from 'src/app/shared/interfaces/app-state.interface';
-import { addProduct } from 'src/store/products/products.actions';
+import { addProduct, editProduct } from 'src/store/products/products.actions';
 
 @Component({
   selector: 'product-form',
@@ -16,42 +16,51 @@ import { addProduct } from 'src/store/products/products.actions';
   styleUrls: ['./product-form.component.css'],
 })
 export class ProductFormComponent implements OnInit, OnDestroy {
-  @Input() product: Product | null = null;
+  product: Product | null = null;
   productForm: FormGroup;
   private subscriptions$ = new Subject<void>();
   selectedNodes: any;
   categoriesTree: TreeNode[] = [];
   loading = false;
   loadingSubmitButton = false;
-  addProduct$: Observable<any>;
+  addEditProduct$: Observable<any>;
 
   constructor(
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
     private store: Store<AppState>
   ) {
+    this.addEditProduct$ = this.store.select((state) => state.products);
     this.productForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
       stock: [0, [Validators.required, Validators.min(0)]],
       price: [0, [Validators.required, Validators.min(0)]],
       category: [''],
     });
+    this.addEditProduct$
+      .pipe(takeUntil(this.subscriptions$))
+      .subscribe((productsState) => {
+        if (productsState) {
+          this.loading = false;
+          this.product = productsState.product;
+          if (this.product) {
+            this.productForm.setValue({
+              name: this.product.name,
+              stock: this.product.stock,
+              price: this.product.price,
+              category: this.product.categories,
+            });
+          }
+        }
+      });
   }
   ngOnDestroy(): void {
+    this.productForm.reset();
     this.subscriptions$.next();
     this.subscriptions$.complete();
   }
 
   ngOnInit(): void {
-    this.addProduct$ = this.store.select((state) => state.products.loading);
-    if (this.product) {
-      this.productForm.setValue({
-        name: this.product.name,
-        stock: this.product.stock,
-        price: this.product.price,
-        category: this.product.categories,
-      });
-    }
     this.buildCategoriesTree();
   }
 
@@ -60,12 +69,23 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     this.loadingSubmitButton = true;
 
     if (this.productForm.valid) {
-      if (this.product) {
-        this.product.name = this.productForm.get('name')?.value;
-        this.product.price = this.productForm.get('price')?.value;
-        this.product.stock = this.productForm.get('stock')?.value;
-        this.product.categories = this.productForm.get('category')?.value;
-        this.store.dispatch(addProduct({ product: this.product }));
+      let productForSave = {
+        id: 0,
+        name: '',
+        stock: 0,
+        price: 0,
+        operations: [],
+        categories: [],
+      };
+      productForSave.name = this.productForm.get('name')?.value;
+      productForSave.price = this.productForm.get('price')?.value;
+      productForSave.stock = this.productForm.get('stock')?.value;
+      productForSave.categories = this.productForm.get('category')?.value;
+      productForSave.operations = [];
+      if (!this.product) {
+        this.store.dispatch(addProduct({ product: productForSave }));
+      } else {
+        this.store.dispatch(editProduct({ product: productForSave }));
       }
     }
   }
