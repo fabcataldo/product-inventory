@@ -1,8 +1,8 @@
-import { Location } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Product } from 'src/app/products/interfaces/product.interface';
 import { AppState } from 'src/app/shared/interfaces/app-state.interface';
+import { CustomNavigationService } from 'src/app/shared/services/custom-navigation.service';
 import { resetProduct } from 'src/store/products/products.actions';
 
 @Component({
@@ -17,7 +17,10 @@ export class ProductPageComponent implements OnInit {
   loading = false;
   isGoingLastPage = false;
 
-  constructor(private store: Store<AppState>, private location: Location) {}
+  constructor(
+    private store: Store<AppState>,
+    private customNavigationService: CustomNavigationService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -34,6 +37,6 @@ export class ProductPageComponent implements OnInit {
   goBack(): void {
     this.isGoingLastPage = true;
     this.store.dispatch(resetProduct());
-    this.location.back();
+    this.customNavigationService.navigateToRoot();
   }
 }

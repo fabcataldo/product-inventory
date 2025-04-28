@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { MenubarComponent } from './components/menubar/menubar.component';
 import { MenubarModule } from 'primeng/menubar';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { CustomNavigationService } from './services/custom-navigation.service';
 
 @NgModule({
   declarations: [SkeletonComponent, MenubarComponent],
@@ -16,6 +17,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MenubarModule,
     OverlayModule,
   ],
+  providers: [CustomNavigationService],
   exports: [SkeletonComponent, ButtonModule, MenubarComponent],
 })
 export class SharedComponentsModule {}

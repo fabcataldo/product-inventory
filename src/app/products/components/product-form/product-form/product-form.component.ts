@@ -1,7 +1,5 @@
-import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TreeNode } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -10,6 +8,7 @@ import { SubCategory } from 'src/app/categories/interfaces/subcategory.interface
 import { CategoriesService } from 'src/app/categories/services/categories.service';
 import { Product } from 'src/app/products/interfaces/product.interface';
 import { AppState } from 'src/app/shared/interfaces/app-state.interface';
+import { CustomNavigationService } from 'src/app/shared/services/custom-navigation.service';
 import { addProduct, editProduct } from 'src/store/products/products.actions';
 
 @Component({
@@ -32,7 +31,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
     private store: Store<AppState>,
-    private location: Location
+    private customNavigationService: CustomNavigationService
   ) {
     this.addEditProduct$ = this.store.select((state) => state.products);
     this.productForm = this.formBuilder.group({
@@ -113,7 +112,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         this.store.dispatch(editProduct({ product: productForSave }));
       }
       this.resetValues();
-      this.location.back();
+      this.customNavigationService.navigateToRoot();
     }
   }
 
