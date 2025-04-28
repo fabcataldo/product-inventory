@@ -1,13 +1,10 @@
-<div class="p-3">
+<div>
   <ng-template [ngIf]="loading" [ngIfElse]="contentLoaded">
     <skeleton></skeleton>
   </ng-template>
 
   <ng-template #contentLoaded>
-    <p-inputSwitch
-      [(ngModel)]="isDarkModeSetted"
-      (onChange)="changeToDarkMode($event)"
-    ></p-inputSwitch>
+    <h1>Panel de Control de Inventario</h1>
     <div class="flex justify-content-around">
       <div
         class="surface-card p-4 shadow-2 border-round w-6 align-items-center w-5 h-full"
