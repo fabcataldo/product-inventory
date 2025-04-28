@@ -10,12 +10,15 @@ import { ProductsByCategoryApiResponse } from '../interfaces/products-by-categor
 export class ProductsService {
   constructor() {}
 
-  getProducts(page: number): Observable<ProductsApiResponse> {
+  getProducts(
+    page: number,
+    pageSize: number = PAGE_SIZE_GET_ALL_PRODUCTS
+  ): Observable<ProductsApiResponse> {
     return of(products).pipe(
       delay(1000),
       switchMap((allProducts: Product[]) => {
-        const pageStartIdx = page * PAGE_SIZE_GET_ALL_PRODUCTS;
-        const pageEndIdx = pageStartIdx + PAGE_SIZE_GET_ALL_PRODUCTS;
+        const pageStartIdx = page * pageSize;
+        const pageEndIdx = pageStartIdx + pageSize;
         const allProductsSlice: Product[] = allProducts.slice(
           pageStartIdx,
           pageEndIdx
@@ -23,7 +26,7 @@ export class ProductsService {
         return of({
           products: allProductsSlice,
           totalProducts: allProducts.length,
-          pageSize: PAGE_SIZE_GET_ALL_PRODUCTS,
+          pageSize: pageSize,
           currentPage: page,
         });
       })
@@ -92,13 +95,14 @@ export class ProductsService {
 
   getProductsByCategory(
     categoryText: string,
-    page: number
+    page: number,
+    pageSize: number = PAGE_SIZE_GET_ALL_PRODUCTS
   ): Observable<ProductsByCategoryApiResponse> {
     return of(products).pipe(
       delay(1000),
       switchMap((allProducts: Product[]) => {
-        const pageStartIdx = page * PAGE_SIZE_GET_ALL_PRODUCTS;
-        const pageEndIdx = pageStartIdx + PAGE_SIZE_GET_ALL_PRODUCTS;
+        const pageStartIdx = page * pageSize;
+        const pageEndIdx = pageStartIdx + pageSize;
 
         const allProductsSlice: Product[] = allProducts.slice(
           pageStartIdx,

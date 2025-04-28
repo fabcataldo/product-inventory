@@ -112,7 +112,9 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getProducts() {
     this.loading = true;
-    this.store.dispatch(loadProducts({ page: this.currentPage }));
+    this.store.dispatch(
+      loadProducts({ page: this.currentPage, pageSize: this.pageSize })
+    );
   }
 
   goToDetailPage(id: number) {
@@ -145,6 +147,7 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
         loadProductsByCategory({
           categoryText: this.productSearchedByCategory,
           page: this.currentPage,
+          pageSize: this.pageSize,
         })
       );
     }
@@ -156,6 +159,7 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onPageChange(event: any) {
+    console.log(event);
     this.pageSize = event.rows;
     this.currentPage = event.first / event.rows;
     this.totalProducts = this.filteredProducts

@@ -16,8 +16,8 @@ export class ProductsEffects {
   loadProducts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.loadProducts),
-      mergeMap(({ page }) =>
-        this.productsService.getProducts(page).pipe(
+      mergeMap(({ page, pageSize }) =>
+        this.productsService.getProducts(page, pageSize).pipe(
           map((productsApi) =>
             ProductActions.loadProductsSuccess({
               products: productsApi.products,
@@ -127,25 +127,27 @@ export class ProductsEffects {
   loadProductsByCategoryText$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProductActions.loadProductsByCategory),
-      mergeMap(({ categoryText, page }) =>
-        this.productsService.getProductsByCategory(categoryText, page).pipe(
-          map((productsApi) =>
-            ProductActions.loadProductsByCategorySuccess({
-              products: productsApi.products,
-              totalProducts: productsApi.totalProducts,
-              pageSize: productsApi.pageSize,
-              currentPage: page,
-            })
-          ),
-          catchError((error) =>
-            of(
-              ProductActions.apiProductsFailure({
-                error:
-                  error.message || 'Error cargando productos por categoría',
+      mergeMap(({ categoryText, page, pageSize }) =>
+        this.productsService
+          .getProductsByCategory(categoryText, page, pageSize)
+          .pipe(
+            map((productsApi) =>
+              ProductActions.loadProductsByCategorySuccess({
+                products: productsApi.products,
+                totalProducts: productsApi.totalProducts,
+                pageSize: productsApi.pageSize,
+                currentPage: page,
               })
+            ),
+            catchError((error) =>
+              of(
+                ProductActions.apiProductsFailure({
+                  error:
+                    error.message || 'Error cargando productos por categoría',
+                })
+              )
             )
           )
-        )
       )
     )
   );

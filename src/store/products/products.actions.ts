@@ -5,7 +5,7 @@ import { Product } from 'src/app/products/interfaces/product.interface';
 
 export const loadProducts = createAction(
   '[Products] Load Products',
-  props<{ page: number }>()
+  props<{ page: number; pageSize: number }>()
 );
 export const loadProduct = createAction(
   '[Products] Load Product',
@@ -13,7 +13,7 @@ export const loadProduct = createAction(
 );
 export const loadProductsByCategory = createAction(
   '[Products] Load Products By Category',
-  props<{ page: number; categoryText: string }>()
+  props<{ page: number; categoryText: string; pageSize: number }>()
 );
 export const loadProductsByCategorySuccess = createAction(
   '[Products] Load Products By CategorySuccess',
