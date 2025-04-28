@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { OperationsService } from 'src/app/operations/service/operations.service';
 import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
@@ -34,8 +33,6 @@ export class BarChartComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (chartData: any) => {
           this.stackedData = chartData;
-          console.log(' this.stackedData');
-          console.log(this.stackedData);
           this.loading = false;
         },
         error: (err) => {

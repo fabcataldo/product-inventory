@@ -1,1 +1,7 @@
-<p-chart type="bar" [data]="stackedData" [options]="stackedOptions"></p-chart>
+<ng-template [ngIf]="loading" [ngIfElse]="chartLoaded">
+  <span>Cargando gráfico...</span>
+</ng-template>
+
+<ng-template #chartLoaded>
+  <p-chart type="bar" [data]="stackedData" [options]="stackedOptions"></p-chart>
+</ng-template>
