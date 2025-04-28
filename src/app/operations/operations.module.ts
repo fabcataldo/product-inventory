@@ -8,7 +8,7 @@ import { OperationsService } from './service/operations.service';
 
 @NgModule({
   declarations: [OperationsListComponent, FormatDatePipe],
-  imports: [CommonModule, TableModule, BarChartModule],
+  imports: [CommonModule, TableModule],
   providers: [OperationsService],
   exports: [OperationsListComponent, FormatDatePipe, BarChartModule],
 })

@@ -26,17 +26,45 @@ export class DashboardService {
   }
 
   getChartData(): Observable<any> {
-    // const finalProducts = products.filter(product => ({
-    //   year:
-    // }))
-    return of({
-      totalProducts,
-      lowStockProducts,
-      totalInventoryValue,
-    }).pipe(
+    const purchasesByYear: Record<string, number> = {};
+    const salesByYear: Record<string, number> = {};
+
+    products.forEach((product) => {
+      product.operations.forEach((operation) => {
+        const year = new Date(operation.timestamp).getFullYear().toString();
+        const amount = product.price;
+
+        if (operation.operationType.name === 'Compra') {
+          purchasesByYear[year] = (purchasesByYear[year] || 0) + amount;
+        } else if (operation.operationType.name === 'Venta') {
+          salesByYear[year] = (salesByYear[year] || 0) + amount;
+        }
+      });
+    });
+
+    const allYears = Array.from(
+      new Set([...Object.keys(purchasesByYear), ...Object.keys(salesByYear)])
+    ).sort();
+
+    const stackedData = {
+      labels: allYears,
+      datasets: [
+        {
+          label: 'Purchases',
+          backgroundColor: '#42A5F5',
+          data: allYears.map((year) => purchasesByYear[year] || 0),
+        },
+        {
+          label: 'Sales',
+          backgroundColor: '#66BB6A',
+          data: allYears.map((year) => salesByYear[year] || 0),
+        },
+      ],
+    };
+    return of().pipe(
       delay(1000),
-      switchMap((dashboardInfo: DashboardApiResponse) => {
-        return of(dashboardInfo);
+      switchMap(() => {
+        return of(stackedData);
       })
     );
   }

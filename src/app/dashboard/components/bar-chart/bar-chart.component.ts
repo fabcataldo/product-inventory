@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { OperationsService } from 'src/app/operations/service/operations.service';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'bar-chart',
@@ -10,36 +11,41 @@ import { OperationsService } from 'src/app/operations/service/operations.service
 export class BarChartComponent implements OnInit, OnDestroy {
   stackedData: any;
   stackedOptions: any;
-  private subscriptions$ = new Subject<void>();
   loading = false;
+  private subscriptions$ = new Subject<void>();
 
-  constructor(private operationsService: OperationsService) {}
+  constructor(private dashboardService: DashboardService) {}
+
+  ngOnDestroy(): void {
+    this.subscriptions$.next();
+    this.subscriptions$.complete();
+  }
 
   ngOnInit(): void {
-    this.stackedData = {
-      labels: ['2023', '2024', '2025'],
-      datasets: [
-        {
-          label: '2023',
-          backgroundColor: '#42A5F5',
-          data: [50, 25, 12],
-        },
-        {
-          label: '2024',
-          backgroundColor: '#66BB6A',
-          data: [21, 80, 24],
-        },
-        {
-          label: '2025',
-          backgroundColor: '#FFA726',
-          data: [1, 10, 10],
-        },
-      ],
-    };
+    this.loadChartData();
+    this.configureChartOptions();
+  }
 
+  loadChartData() {
+    this.loading = true;
+    this.dashboardService
+      .getChartData()
+      .pipe(takeUntil(this.subscriptions$))
+      .subscribe({
+        next: (chartData: any) => {
+          this.stackedData = chartData;
+          console.log(' this.stackedData');
+          console.log(this.stackedData);
+          this.loading = false;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
+  configureChartOptions() {
     this.stackedOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
       plugins: {
         legend: {
           labels: {
@@ -51,6 +57,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
           intersect: false,
         },
       },
+      responsive: true,
       scales: {
         x: {
           stacked: true,
@@ -72,25 +79,5 @@ export class BarChartComponent implements OnInit, OnDestroy {
         },
       },
     };
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions$.next();
-    this.subscriptions$.complete();
-  }
-
-  private buildOperationsTree() {
-    this.loading = true;
-    this.operationsService
-      .getOperations()
-      .pipe(takeUntil(this.subscriptions$))
-      .subscribe({
-        next: (categoriesApi) => {
-          this.loading = false;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
   }
 }
