@@ -84,7 +84,7 @@ export class ProductsService {
         ) as number;
 
         if (productIdx >= 0) {
-          products = products.slice(productIdx, 1);
+          products = products.splice(productIdx, 1);
           return of(product);
         } else {
           throw new Error('Producto no encontrado');

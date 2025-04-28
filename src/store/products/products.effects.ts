@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as ProductActions from './products.actions';
 import { ProductsService } from 'src/app/products/services/products.service';
-import { catchError, map, mergeMap, of } from 'rxjs';
-import { totalProducts } from '../../helpers/dummy-data';
+import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { Product } from 'src/app/products/interfaces/product.interface';
+import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class ProductsEffects {
   constructor(
     private actions$: Actions,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private messageService: MessageService
   ) {}
 
   loadProducts$ = createEffect(() =>
@@ -151,4 +152,56 @@ export class ProductsEffects {
       )
     )
   );
+
+  // removeProductSuccess$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(ProductActions.removeProductSuccess),
+  //     tap(() =>
+  //       this.messageService.add({
+  //         severity: 'info',
+  //         summary: 'Confirmado',
+  //         detail: 'Producto eliminado correctamente',
+  //       })
+  //     )
+  //   )
+  // );
+
+  // editProductSuccess$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(ProductActions.editProductSuccess),
+  //     tap(() =>
+  //       this.messageService.add({
+  //         severity: 'info',
+  //         summary: 'Confirmado',
+  //         detail: 'Producto actualizado correctamente',
+  //       })
+  //     )
+  //   )
+  // );
+
+  // addProductSuccess$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(ProductActions.addProductSuccess),
+  //     tap(() =>
+  //       this.messageService.add({
+  //         severity: 'info',
+  //         summary: 'Confirmado',
+  //         detail: 'Producto agregado correctamente',
+  //       })
+  //     )
+  //   )
+  // );
+
+  // errorApiProduct$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(ProductActions.apiProductsFailure),
+  //     tap(({ error }) =>
+  //       this.messageService.add({
+  //         severity: 'error',
+  //         summary: 'Error',
+  //         detail: error,
+  //       })
+  //     )
+  //   )
+  // );
 }

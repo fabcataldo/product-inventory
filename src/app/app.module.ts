@@ -13,9 +13,12 @@ import { ProductsModule } from './products/products.module';
 import { OperationsModule } from './operations/operations.module';
 import { CategoriesModule } from './categories/categories.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
+import { BarChartComponent } from './dashboard/components/bar-chart/bar-chart.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, BarChartComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,8 +32,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     OperationsModule,
     SharedComponentsModule,
     CategoriesModule,
+    MessagesModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

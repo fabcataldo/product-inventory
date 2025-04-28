@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { ProductFormModule } from './components/product-form/product-form/product-form.module';
 import { SharedComponentsModule } from '../shared/shared-components.module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [ProductsListComponent, ProductComponent],
@@ -17,6 +18,7 @@ import { SharedComponentsModule } from '../shared/shared-components.module';
     TableModule,
     ProductFormModule,
     SharedComponentsModule,
+    ConfirmDialogModule,
   ],
   exports: [
     ProductsListComponent,

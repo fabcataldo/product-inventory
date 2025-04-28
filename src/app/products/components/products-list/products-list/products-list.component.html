@@ -1,22 +1,23 @@
 <div class="mt-2 container justify-content-center background">
-  <div class="flex mt-4 justify-content-between">
+  <div class="flex mt-3 justify-content-between">
     <div class="col-2">
-      <p-button
+      <button
+        pButton
+        class="h-3rem w-12rem"
         label="Agregar Producto"
         type="submit"
         (click)="goToCreateProductPage()"
-      >
-      </p-button>
+      ></button>
     </div>
 
-    <div class="flex col-3 custom-search-input">
+    <div class="flex col-3 w-60">
       <input
         #searchInputByCategory
         type="text"
         id="searchInputByCategory"
         [value]="productSearchedByCategory"
         placeholder="Buscar producto por categoría..."
-        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full h-3rem"
       />
     </div>
   </div>
@@ -50,32 +51,41 @@
         <td>{{ product.price | currency }}</td>
         <td>{{ product.stock }}</td>
         <td>
-          <li *ngFor="let category of product.categories">
-            <ul>
-              {{
-                category.name
-              }}
-            </ul>
-          </li>
+          <span>{{ getCategoriesNameList(product.categories) }}</span>
         </td>
         <td>
-          <button
-            aria-label="detail button"
-            (click)="goToDetailPage(product.id)"
-          >
-            <i class="pi pi-info-circle"></i>
-          </button>
-          <button aria-label="edit button" (click)="goToEditPage(product.id)">
-            <i class="pi pi-pencil"></i>
-          </button>
-          <button
-            aria-label="delete button"
-            (click)="showDeleteModal(product.id)"
-          >
-            <i class="pi pi-trash"></i>
-          </button>
+          <div class="flex w-10rem justify-content-around">
+            <button
+              pButton
+              aria-label="detail button"
+              icon="pi pi-info-circle"
+              (click)="goToDetailPage(product.id)"
+              class="p-button-info"
+            ></button>
+            <button
+              pButton
+              class="p-button-secondary"
+              icon="pi pi-pencil"
+              aria-label="edit button"
+              (click)="goToEditPage(product.id)"
+            ></button>
+            <button
+              pButton
+              icon="pi pi-trash"
+              aria-label="delete button"
+              (click)="showDeleteModal(product)"
+              class="p-button-danger"
+            ></button>
+          </div>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<p-confirmDialog
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  acceptButtonStyleClass="p-button-danger"
+></p-confirmDialog>

@@ -61,21 +61,25 @@ export const productsReducer = createReducer(
   on(ProductActions.loadProductSuccess, (state, { product }) => ({
     ...state,
     loading: false,
+    error: null,
     product,
   })),
   on(ProductActions.addProductSuccess, (state, { product }) => ({
     ...state,
     loading: false,
+    error: null,
     product,
   })),
   on(ProductActions.editProductSuccess, (state, { product }) => ({
     ...state,
     loading: false,
+    error: null,
     product,
   })),
   on(ProductActions.removeProductSuccess, (state, { product }) => ({
     ...state,
     loading: false,
+    error: null,
     product,
   })),
   on(ProductActions.loadProductsByCategory, (state, { categoryText }) => ({

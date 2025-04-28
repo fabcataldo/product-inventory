@@ -1,4 +1,5 @@
-<button mat-button class="btn btn-light mt-4" (click)="goBack()">← Back</button>
+<button pButton class="h-3rem w-6rem" (click)="goBack()">Volver</button>
+
 <ng-template [ngIf]="loading" [ngIfElse]="contentLoaded">
   <skeleton></skeleton>
 </ng-template>
@@ -12,16 +13,14 @@
   </ng-template>
 
   <ng-template #detailOnly>
-    <div class="surface-card p-4 border-round w-full h-full mb-5">
-      <span class="font-semibold">Producto</span>
+    <div class="surface-card p-4 border-round w-full h-full mb-1">
       <product-detail [product]="product"></product-detail>
     </div>
 
     <div
-      class="surface-card p-4 border-round w-full h-full"
-      *ngIf="product?.operations || product?.operations?.length"
+      class="surface-card mx-4 mt-2 border-round w-full h-full"
+      *ngIf="product?.operations?.length"
     >
-      <span class="font-semibold">Movimientos</span>
       <operations-list
         [productOperations]="product!.operations"
       ></operations-list>
