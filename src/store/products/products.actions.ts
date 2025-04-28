@@ -46,11 +46,11 @@ export const removeProduct = createAction(
 
 export const addProductSuccess = createAction(
   '[Products] Add Product',
-  props<{ product: Product | null }>()
+  props<{ product: Product }>()
 );
 export const editProductSuccess = createAction(
   '[Products] Edit Product',
-  props<{ product: Product | null }>()
+  props<{ product: Product }>()
 );
 export const removeProductSuccess = createAction(
   '[Products] Remove Product',

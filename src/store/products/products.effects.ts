@@ -65,9 +65,9 @@ export class ProductsEffects {
       ofType(ProductActions.addProduct),
       mergeMap(({ product }) =>
         this.productsService.addProduct(product).pipe(
-          map((productsApi) =>
+          map((productApi) =>
             ProductActions.addProductSuccess({
-              product: null,
+              product: productApi as Product,
             })
           ),
           catchError((error) =>
@@ -86,9 +86,9 @@ export class ProductsEffects {
       ofType(ProductActions.editProduct),
       mergeMap(({ product }) =>
         this.productsService.updateProduct(product).pipe(
-          map((productsApi) =>
+          map((productApi) =>
             ProductActions.editProductSuccess({
-              product: null,
+              product: productApi as Product,
             })
           ),
           catchError((error) =>
