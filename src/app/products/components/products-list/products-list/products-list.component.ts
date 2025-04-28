@@ -77,8 +77,6 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.productsByCategory$
       .pipe(takeUntil(this.subscriptions$))
       .subscribe((response) => {
-        console.log('loadProductsByCategorySuccess');
-        console.log(response);
         if (response) {
           this.loading = false;
           this.filteredProducts = response.products;
@@ -131,14 +129,10 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   showDeleteModal(id: number) {}
 
   updateTableDataSource(isFiltering?: boolean) {
-    console.log('isFiltering');
-    console.log(isFiltering);
     this.dataSource = isFiltering ? this.filteredProducts : this.localProducts;
   }
 
   applyFilter(): void {
-    console.log('productSearchedByCategory');
-    console.log(this.productSearchedByCategory);
     if (!this.productSearchedByCategory.length) {
       this.pageSize = this.backupedPageSize;
       this.currentPage = this.backupedCurrentPage;
