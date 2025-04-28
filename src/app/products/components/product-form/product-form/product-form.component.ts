@@ -27,7 +27,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   loadingSubmitButton = false;
   addEditProduct$: Observable<any>;
   categoriesSelected: any;
-  lastProductId = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,7 +49,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       .subscribe((productsState) => {
         if (productsState) {
           this.loading = false;
-          this.lastProductId = productsState.allProducts.totalProducts;
           if (!!productsState.product) {
             this.product = productsState.product! as Product;
             this.productForm.setValue({
@@ -91,9 +89,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         operations: [],
         categories: [],
       };
-      productForSave.id = this.product?.id
-        ? this.product!.id
-        : this.lastProductId;
       productForSave.name = this.productForm.get('name')?.value;
       productForSave.price = this.productForm.get('price')?.value;
       productForSave.stock = this.productForm.get('stock')?.value;

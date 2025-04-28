@@ -50,6 +50,7 @@ export class ProductsService {
     return of(products).pipe(
       delay(1000),
       switchMap((products: Product[]) => {
+        product = { ...product, id: products.length };
         products = [...products, product];
         return of(product);
       })

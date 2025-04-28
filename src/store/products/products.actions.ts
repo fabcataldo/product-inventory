@@ -45,15 +45,15 @@ export const removeProduct = createAction(
 );
 
 export const addProductSuccess = createAction(
-  '[Products] Add Product',
+  '[Products] Add Product Success',
   props<{ product: Product }>()
 );
 export const editProductSuccess = createAction(
-  '[Products] Edit Product',
+  '[Products] Edit Product Success',
   props<{ product: Product }>()
 );
 export const removeProductSuccess = createAction(
-  '[Products] Remove Product',
+  '[Products] Remove Product Success',
   props<{ product: Product }>()
 );
 
