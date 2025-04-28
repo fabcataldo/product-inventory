@@ -2,14 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import {
   debounceTime,
@@ -23,14 +19,12 @@ import {
 import { PAGE_SIZE_GET_ALL_PRODUCTS } from 'src/app/products/helpers/constants';
 import { ProductsByCategoryApiResponse } from 'src/app/products/interfaces/products-by-category-api.response';
 import { Product } from 'src/app/products/interfaces/product.interface';
-import { DashboardState } from 'src/store/dashboard/dashboard.reducer';
 import {
   activateEditProduct,
   loadProduct,
   loadProducts,
   loadProductsByCategory,
 } from 'src/store/products/products.actions';
-import { ProductsState } from 'src/store/products/products.reducer';
 import { ProductsApiResponse } from 'src/app/products/interfaces/products-api.response';
 import { Router } from '@angular/router';
 import { AppState } from 'src/app/shared/interfaces/app-state.interface';
@@ -42,8 +36,6 @@ import { activateAddProduct } from '../../../../../store/products/products.actio
   styleUrls: ['./products-list.component.css'],
 })
 export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(MatSort) sort: MatSort | null = null;
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
   @ViewChild('searchInputByCategory') searchInputByCategory!: ElementRef;
   products$: Observable<ProductsApiResponse | null>;
   productsByCategory$: Observable<ProductsByCategoryApiResponse | null>;
@@ -180,38 +172,5 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.getProducts();
     }
-  }
-
-  sortData(sort: Sort) {
-    let data = this.localProducts.slice();
-
-    if (!sort.active || sort.direction === '') {
-      this.localProducts = data;
-      return;
-    }
-
-    data = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'name':
-          return this.compareTableItems(a.name, b.name, isAsc);
-        case 'price':
-          return this.compareTableItems(a.price, b.price, isAsc);
-        case 'stock':
-          return this.compareTableItems(a.stock, b.stock, isAsc);
-        default:
-          return 0;
-      }
-    });
-    this.localProducts = data;
-    this.updateTableDataSource();
-  }
-
-  private compareTableItems(
-    a: number | string | undefined,
-    b: number | string | undefined,
-    isAsc: boolean
-  ) {
-    return (a!! < b!! ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }
