@@ -5,31 +5,27 @@
 @import "primeflex/primeflex.css";
 
 :root {
-  --theme-color: #f1f2f3;
-  --text-color: #000000;
+  --background-color: #fff;
+  --text-color: #222;
 }
 
-body {
+body.dark-theme,
+div.dark-theme,
+h1.dark-theme,
+h2.dark-theme {
+  --text-color: #fff;
+  --background-color: #222;
+}
+
+body,
+div {
   font-family: var(--font-family);
-  background: var(--theme-color);
+  background: var(--background-color);
   color: var(--text-color);
 }
 
-body[data-theme="dark"] {
-  --theme-color: #494d50;
-  --text-color: #ffffff;
-}
-
-body[data-theme="red"] {
-  --text-color: #ff0000;
-}
-
-.page-content-color-dark-mode {
-  background-color: "black";
-  color: "white";
-}
-
-.page-content-color-light-mode {
-  background-color: "white";
-  color: "black";
+h1,
+h2,
+p {
+  color: var(--text-color);
 }

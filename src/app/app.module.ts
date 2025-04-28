@@ -15,11 +15,8 @@ import { CategoriesModule } from './categories/categories.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessagesModule } from 'primeng/messages';
 import { MessageService } from 'primeng/api';
-import { BarChartComponent } from './dashboard/components/bar-chart/bar-chart.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
-import { uiReducer } from 'src/store/ui/ui.reducer';
-import { UIEffects } from 'src/store/ui/ui.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,9 +27,8 @@ import { UIEffects } from 'src/store/ui/ui.effects';
     StoreModule.forRoot({
       products: productsReducer,
       dashboard: dashboardReducer,
-      ui: uiReducer,
     }),
-    EffectsModule.forRoot([ProductsEffects, DashboardEffects, UIEffects]),
+    EffectsModule.forRoot([ProductsEffects, DashboardEffects]),
     ProductsModule,
     OperationsModule,
     SharedComponentsModule,

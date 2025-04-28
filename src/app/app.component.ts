@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { DashboardState } from 'src/store/dashboard/dashboard.reducer';
-import { ProductsState } from 'src/store/products/products.reducer';
-import { toggleDarkMode } from 'src/store/ui/ui.actions';
-import { UIState } from 'src/store/ui/ui.reducer';
 
 @Component({
   selector: 'app-root',
@@ -13,14 +8,13 @@ import { UIState } from 'src/store/ui/ui.reducer';
 })
 export class AppComponent implements OnInit {
   isDarkModeSetted = false;
-  constructor(private router: Router, private store: Store<UIState>) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.router.navigate(['/dashboard']);
   }
 
   changeToDarkMode(event: any) {
-    console.log(event);
-    this.store.dispatch(toggleDarkMode());
+    document.body.classList.toggle('dark-theme');
   }
 }
