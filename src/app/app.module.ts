@@ -18,7 +18,7 @@ import { MessageService } from 'primeng/api';
 import { BarChartComponent } from './dashboard/components/bar-chart/bar-chart.component';
 
 @NgModule({
-  declarations: [AppComponent, BarChartComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

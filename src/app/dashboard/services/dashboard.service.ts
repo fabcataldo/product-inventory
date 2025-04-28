@@ -24,4 +24,20 @@ export class DashboardService {
       })
     );
   }
+
+  getChartData(): Observable<any> {
+    // const finalProducts = products.filter(product => ({
+    //   year:
+    // }))
+    return of({
+      totalProducts,
+      lowStockProducts,
+      totalInventoryValue,
+    }).pipe(
+      delay(1000),
+      switchMap((dashboardInfo: DashboardApiResponse) => {
+        return of(dashboardInfo);
+      })
+    );
+  }
 }
