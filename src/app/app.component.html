@@ -1,5 +1,9 @@
 <div class="dark-mode">
   <custom-menubar></custom-menubar>
+  <p-inputSwitch
+    [(ngModel)]="isDarkModeSetted"
+    (onChange)="changeToDarkMode($event)"
+  ></p-inputSwitch>
   <div class="container p-3">
     <router-outlet></router-outlet>
   </div>

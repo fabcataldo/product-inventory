@@ -5,7 +5,6 @@ import { DashboardPageRoutingModule } from './dashboard-page-routing.module';
 import { DashboardPageComponent } from './dashboard-page.component';
 import { SharedComponentsModule } from 'src/app/shared/shared-components.module';
 import { OperationsModule } from 'src/app/operations/operations.module';
-import { InputSwitchModule } from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -15,7 +14,6 @@ import { FormsModule } from '@angular/forms';
     DashboardPageRoutingModule,
     SharedComponentsModule,
     OperationsModule,
-    InputSwitchModule,
     FormsModule,
   ],
 })

@@ -14,7 +14,3 @@ export const loadDashboardFailure = createAction(
   '[Dashboard] Load Failure',
   props<{ error: string }>()
 );
-export const setDarkMode = createAction(
-  '[Dashboard] Set Dark Mode',
-  props<{ isDarkModeOn: boolean }>()
-);

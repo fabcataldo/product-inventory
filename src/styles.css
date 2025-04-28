@@ -4,8 +4,24 @@
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
 
+:root {
+  --theme-color: #f1f2f3;
+  --text-color: #000000;
+}
+
 body {
   font-family: var(--font-family);
+  background: var(--theme-color);
+  color: var(--text-color);
+}
+
+body[data-theme="dark"] {
+  --theme-color: #494d50;
+  --text-color: #ffffff;
+}
+
+body[data-theme="red"] {
+  --text-color: #ff0000;
 }
 
 .page-content-color-dark-mode {
