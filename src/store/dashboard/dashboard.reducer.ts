@@ -8,6 +8,7 @@ export interface DashboardState {
   totalInventoryValue: number;
   loading: boolean;
   error: string | null;
+  isDarkMode: boolean;
 }
 
 const initialState: DashboardState = {
@@ -16,6 +17,7 @@ const initialState: DashboardState = {
   totalInventoryValue: 0,
   loading: false,
   error: null,
+  isDarkMode: false,
 };
 
 export const dashboardReducer = createReducer(
@@ -35,5 +37,9 @@ export const dashboardReducer = createReducer(
     ...state,
     loading: false,
     error,
+  })),
+  on(DashboardActions.setDarkMode, (state, { isDarkModeOn }) => ({
+    ...state,
+    isDarkMode: isDarkModeOn,
   }))
 );

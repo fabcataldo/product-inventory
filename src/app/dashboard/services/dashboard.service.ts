@@ -61,7 +61,7 @@ export class DashboardService {
         },
       ],
     };
-    return of().pipe(
+    return of(stackedData).pipe(
       delay(1000),
       switchMap(() => {
         return of(stackedData);

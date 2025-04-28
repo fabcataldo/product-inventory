@@ -3,7 +3,10 @@ import { Store } from '@ngrx/store';
 import { DashboardState } from 'src/store/dashboard/dashboard.reducer';
 import { LowStockProducts } from 'src/app/dashboard/interfaces/low-stock-products.interface';
 import { ProductsState } from 'src/store/products/products.reducer';
-import { loadDashboard } from 'src/store/dashboard/dashboard.actions';
+import {
+  loadDashboard,
+  setDarkMode,
+} from 'src/store/dashboard/dashboard.actions';
 
 @Component({
   selector: 'dashboard-page',
@@ -15,6 +18,7 @@ export class DashboardPageComponent implements OnInit {
   lowStockProducts: LowStockProducts[] = [];
   totalInventoryValue = 0;
   loading = false;
+  isDarkModeSetted = false;
   constructor(
     private store: Store<{ products: ProductsState; dashboard: DashboardState }>
   ) {}
@@ -29,6 +33,13 @@ export class DashboardPageComponent implements OnInit {
         this.totalProducts = resp.dashboard.totalProducts;
         this.lowStockProducts = resp.dashboard.lowStockProducts;
         this.totalInventoryValue = resp.dashboard.totalInventoryValue;
+        this.isDarkModeSetted = resp.dashboard.isDarkMode;
+
+        console.log(resp);
       });
+  }
+
+  changeToDarkMode(event: any) {
+    this.store.dispatch(setDarkMode({ isDarkModeOn: event.checked }));
   }
 }
