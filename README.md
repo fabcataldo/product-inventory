@@ -1,27 +1,48 @@
-# ProductInventory
+# Product Inventory App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+Product Inventory App es una aplicación en Angular 14, diseñada para gestionar información sobre el inventario de productos de talleres mecánicos. Se ejecuta en un entorno Dockerizado para facilitar la configuración y despliegue.
 
-## Development server
+## Características
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Aplicación frontend desarrollada con **Angular 14**.
+- Contenedor **Docker** para ejecutar la app sin necesidad de configuraciones locales.
+- **Live Reload** habilitado con volúmenes en Docker.
+- Accesible en `localhost:4200` desde cualquier navegador.
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Instalación y Configuración
 
-## Build
+### 1️ **Requisitos previos**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Asegúrate de tener instalados:
 
-## Running unit tests
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 2️ **Clonar el repositorio**
 
-## Running end-to-end tests
+```sh
+git clone https://github.com/fabcataldo/product-inventory.git
+cd product-inventory
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 3 **Ejecución**
 
-## Further help
+Primero "levantar" el entorno de Docker, y luego ejecutar por terminal:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```sh
+docker-compose up --build
+```
+
+### Si quieres "apagar" el contenedor del frontend:
+
+```sh
+docker-compose down
+```
+
+### Si quieres ejecutar los tests (fuera del contenedor, levantando en localhost)
+
+```sh
+ng test
+```
