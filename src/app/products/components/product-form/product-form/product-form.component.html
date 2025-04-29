@@ -1,4 +1,11 @@
 <div class="container d-flex justify-content-center p-5">
+  <ng-template [ngIf]="!product" [ngIfElse]="editProduct">
+    <h1>Crear Nuevo Producto</h1>
+  </ng-template>
+  <ng-template #editProduct>
+    <h1>Editar Producto</h1>
+  </ng-template>
+
   <form [formGroup]="productForm" class="mb-3" (submit)="onSubmit($event)">
     <div class="field">
       <label for="nameFormControl">Nombre </label>
