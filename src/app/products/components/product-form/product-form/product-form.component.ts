@@ -78,8 +78,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   onSubmit(event: any) {
     event.preventDefault();
     this.loadingSubmitButton = true;
-    console.log('this.productForm');
-    console.log(this.productForm);
     if (this.productForm.valid) {
       this.loadingSubmitButton = false;
       let productForSave = {

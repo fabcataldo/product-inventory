@@ -91,8 +91,6 @@ describe('DashboardPageComponent', () => {
     component.loading = false;
     fixture.detectChanges();
 
-    console.log('component');
-    console.log(fixture.nativeElement);
     expect(component.stackedData.datasets).not.toBeNull();
 
     const chart = fixture.nativeElement.querySelector(
@@ -107,12 +105,8 @@ describe('DashboardPageComponent', () => {
   });
 
   it('should obtain and render dashboard data', fakeAsync(() => {
-    console.log('storeSpy.dispatch');
-
     fixture.detectChanges();
 
-    console.log('component.totalInventoryValue');
-    console.log(component.totalInventoryValue);
     expect(storeSpy.dispatch).toHaveBeenCalledWith(loadDashboard());
 
     const totalProductsInfoElement = fixture.debugElement.query(

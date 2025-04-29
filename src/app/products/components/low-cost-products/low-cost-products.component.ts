@@ -100,7 +100,6 @@ export class LowCostProductsComponent implements AfterViewInit, OnInit {
       .pipe(takeUntil(this.subscriptions$))
       .subscribe({
         next: (apiResponse: any) => {
-          console.log(apiResponse);
           this.loading = false;
           this.localProducts = apiResponse.products;
           this.totalProducts = apiResponse.totalProducts;

@@ -56,9 +56,6 @@ export class DashboardPageComponent implements OnInit {
         next: (chartData: any) => {
           this.stackedData = chartData;
           this.loading = false;
-
-          console.log('stackedData');
-          console.log(this.stackedData);
         },
         error: (err) => {
           console.log(err);
