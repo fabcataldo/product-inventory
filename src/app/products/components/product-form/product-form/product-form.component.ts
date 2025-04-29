@@ -5,7 +5,7 @@ import { TreeNode } from 'primeng/api';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Category } from 'src/app/categories/interfaces/category.interface';
 import { SubCategory } from 'src/app/categories/interfaces/subcategory.interface';
-import { CategoriesService } from 'src/app/categories/services/categories.service';
+import { CategoriesService } from 'src/app/categories/services/categories/categories.service';
 import { Product } from 'src/app/products/interfaces/product.interface';
 import { AppState } from 'src/app/shared/interfaces/app-state.interface';
 import { CustomNavigationService } from 'src/app/shared/services/custom-navigation.service';

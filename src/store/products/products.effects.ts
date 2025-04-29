@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as ProductActions from './products.actions';
-import { ProductsService } from 'src/app/products/services/products.service';
+import { ProductsService } from 'src/app/products/services/products/products.service';
 import { catchError, map, mergeMap, of, tap } from 'rxjs';
 import { Product } from 'src/app/products/interfaces/product.interface';
 import { MessageService } from 'primeng/api';

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../interfaces/product.interface';
+import { Product } from '../../interfaces/product.interface';
 import { delay, Observable, of, switchMap } from 'rxjs';
 import { products } from 'src/helpers/dummy-data';
-import { PAGE_SIZE_GET_ALL_PRODUCTS } from '../helpers/constants';
-import { ProductsApiResponse } from '../interfaces/products-api.response';
-import { ProductsByCategoryApiResponse } from '../interfaces/products-by-category-api.response';
+import { PAGE_SIZE_GET_ALL_PRODUCTS } from '../../helpers/constants';
+import { ProductsApiResponse } from '../../interfaces/products-api.response';
+import { ProductsByCategoryApiResponse } from '../../interfaces/products-by-category-api.response';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
@@ -49,7 +49,7 @@ export class ProductsService {
     );
   }
 
-  addProduct(product: Product): Observable<Product | Error> {
+  addProduct(product: Product): Observable<Product> {
     return of(products).pipe(
       delay(1000),
       switchMap((products: Product[]) => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of, switchMap } from 'rxjs';
-import { Category } from '../interfaces/category.interface';
+import { Category } from '../../interfaces/category.interface';
 import { categories } from 'src/helpers/dummy-data';
 
 @Injectable({

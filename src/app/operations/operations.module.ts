@@ -4,7 +4,7 @@ import { OperationsListComponent } from './components/operations-list/operations
 import { TableModule } from 'primeng/table';
 import { FormatDatePipe } from './pipes/format-date.pipe';
 import { BarChartModule } from '../dashboard/components/bar-chart/bar-chart.module';
-import { OperationsService } from './service/operations.service';
+import { OperationsService } from './services/operations/operations.service';
 
 @NgModule({
   declarations: [OperationsListComponent, FormatDatePipe],
