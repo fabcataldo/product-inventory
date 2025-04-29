@@ -12,7 +12,6 @@
 </ng-template>
 
 <ng-template #contentLoaded>
-  <h1>Detalles del producto {{ product!.name }}</h1>
   <ng-template
     [ngIf]="isEditingProduct || isAddingProduct"
     [ngIfElse]="detailOnly"
