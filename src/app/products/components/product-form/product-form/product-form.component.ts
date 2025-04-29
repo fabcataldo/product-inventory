@@ -36,8 +36,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     this.addEditProduct$ = this.store.select((state) => state.products);
     this.productForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
-      stock: [0, [Validators.required, Validators.min(0)]],
-      price: [0, [Validators.required, Validators.min(0)]],
+      stock: ['', [Validators.required]],
+      price: ['', [Validators.required]],
       category: [],
     });
     this.productForm.controls['category'].valueChanges.subscribe((value) => {
@@ -78,8 +78,10 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   onSubmit(event: any) {
     event.preventDefault();
     this.loadingSubmitButton = true;
-
+    console.log('this.productForm');
+    console.log(this.productForm);
     if (this.productForm.valid) {
+      this.loadingSubmitButton = false;
       let productForSave = {
         id: 0,
         name: '',
@@ -89,8 +91,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         categories: [],
       };
       productForSave.name = this.productForm.get('name')?.value;
-      productForSave.price = this.productForm.get('price')?.value;
-      productForSave.stock = this.productForm.get('stock')?.value;
+      productForSave.price = Number(this.productForm.get('price')?.value);
+      productForSave.stock = Number(this.productForm.get('stock')?.value);
 
       const finalValue = this.productForm.controls['category'].value.map(
         (category: any) => ({
@@ -113,6 +115,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       }
       this.resetValues();
       this.customNavigationService.navigateToRoot();
+    } else {
+      this.loadingSubmitButton = false;
+      this.productForm.markAllAsTouched();
     }
   }
 
