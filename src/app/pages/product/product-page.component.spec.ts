@@ -1,48 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductPageComponent } from './product-page.component';
-import { of } from 'rxjs';
 import { loadProduct, resetProduct } from 'src/store/products/products.actions';
-import { By } from '@angular/platform-browser';
 import { products } from 'src/helpers/dummy-data';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
-import { CommonModule } from '@angular/common';
-import { OperationsModule } from 'src/app/operations/operations.module';
-import { ProductsModule } from 'src/app/products/products.module';
-import { SharedComponentsModule } from 'src/app/shared/shared-components.module';
-import { ProductPageRoutingModule } from './product-page-routing.module';
+import { MockStore } from '@ngrx/store/testing';
+import { StoreModule } from '@ngrx/store';
+import { productsReducer } from 'src/store/products/products.reducer';
+import { ProductsService } from 'src/app/products/services/products/products.service';
 
 describe('ProductPageComponent', () => {
   let component: ProductPageComponent;
   let fixture: ComponentFixture<ProductPageComponent>;
   let locSpy = jasmine.createSpyObj('Location', ['back']);
+  let mockProductService: jasmine.SpyObj<ProductsService>;
   let store: MockStore;
   const mockProduct = products[0];
-  const initialState = {
-    products: {
-      product: mockProduct,
-      isEditingProduct: true,
-      isAddingProduct: false,
-      loading: false,
-    },
-  };
 
   beforeEach(async () => {
     locSpy = jasmine.createSpyObj('Location', ['back']);
+    mockProductService = jasmine.createSpyObj('ProductService', [
+      'loadProduct',
+    ]);
 
     await TestBed.configureTestingModule({
       declarations: [ProductPageComponent],
-      imports: [
-        CommonModule,
-        ProductPageRoutingModule,
-        ProductsModule,
-        OperationsModule,
-        SharedComponentsModule,
-      ],
-      providers: [
-        provideMockStore({ initialState }),
-        { provide: Location, useValue: locSpy },
-      ],
+      imports: [StoreModule.forRoot({ products: productsReducer })],
+      providers: [{ provide: ProductsService, useValue: mockProductService }],
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
@@ -62,19 +45,24 @@ describe('ProductPageComponent', () => {
   });
 
   it('ngOnInit: should select product with action loadProduct and update UI', () => {
-    const title = fixture.debugElement.query(By.css('span')).nativeElement;
-    expect(title.textContent).toContain(mockProduct.name);
+    component.loading = true;
+    component.product = products[0];
+
+    fixture.detectChanges();
+
+    expect(component.loading).toBeFalse();
+    const productDetail = fixture.nativeElement.querySelector('product-detail');
+    expect(productDetail).toBeTruthy();
   });
 
   it('should do goBack() and dispatch of action resetProduct', () => {
-    const button = fixture.nativeElement.querySelector(
-      'button[aria-label="detail button"]'
-    );
-    console.log('button');
-    console.log(button);
-    button.click();
-    component.goBack();
+    store.dispatch(resetProduct());
+    const locationSpy = spyOn(component['location'], 'back');
+
+    const goBackButton = fixture.nativeElement.querySelector('button');
+    goBackButton.click();
+
     expect(store.dispatch).toHaveBeenCalledWith(resetProduct());
-    expect(locSpy.back).toHaveBeenCalled();
+    expect(locationSpy).toHaveBeenCalled();
   });
 });

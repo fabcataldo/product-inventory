@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,10 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   isDarkModeSetted = false;
-  constructor(private router: Router) {}
+  constructor(private router: Router, public titleService: Title) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Panel de Control de Inventario');
     this.router.navigate(['/dashboard']);
   }
 
