@@ -182,7 +182,7 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   applyFilter(): void {
-    if (this.isFiltering()) {
+    if (!this.isFiltering()) {
       this.pageSize = this.backupedPageSize;
       this.currentPage = this.backupedCurrentPage;
       this.totalProducts = this.backupedTotalProducts;
