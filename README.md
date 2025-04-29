@@ -19,6 +19,7 @@ Asegúrate de tener instalados:
 
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [NPM y NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ### 2️ **Clonar el repositorio**
 
@@ -43,6 +44,18 @@ docker-compose down
 
 ### Si quieres ejecutar los tests (fuera del contenedor, levantando en localhost)
 
+Instalar Node.js usando la URL especificada más arriba, luego:
+Comprobar que esté instalado Node.js corriendo el comando:
+
 ```sh
-ng test
+node -v,
+```
+
+Después:
+Correr el comando nvm use 14.15.0 asi instala la versión de Node.js, y automáticamente se setea dicha versión por defecto
+Por último:
+Ejecutar el comando:
+
+```sh
+npx -p @angular/cli@14 ng test --code-coverage
 ```
