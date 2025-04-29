@@ -36,7 +36,7 @@ export class ProductsService {
   getLowStockProducts(
     page: number,
     pageSize: number = PAGE_SIZE_GET_ALL_PRODUCTS,
-    searchTextByName: string
+    searchTextByName?: string
   ): Observable<ProductsApiResponse> {
     return of(lowStockProducts).pipe(
       delay(1000),
@@ -47,8 +47,7 @@ export class ProductsService {
           pageStartIdx,
           pageEndIdx
         );
-
-        if (searchTextByName.length) {
+        if (searchTextByName?.length) {
           allLowStockProductsSlice = allLowStockProductsSlice.filter(
             (product) =>
               product.name
