@@ -19,7 +19,7 @@ Asegúrate de tener instalados:
 
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- [NPM y NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [NPM y NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) (Solo para testing)
 
 ### 2️ **Clonar el repositorio**
 
