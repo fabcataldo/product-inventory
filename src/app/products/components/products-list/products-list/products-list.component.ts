@@ -147,6 +147,11 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.store.dispatch(removeProduct({ product }));
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmado',
+          detail: 'Producto eliminado correctamente',
+        });
         this.getProducts();
       },
       reject: (type: any) => {
