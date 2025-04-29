@@ -1,7 +1,7 @@
-import { LowStockProducts } from './low-stock-products.interface';
+import { Product } from 'src/app/products/interfaces/product.interface';
 
 export interface DashboardApiResponse {
   totalProducts: number;
-  lowStockProducts: LowStockProducts[];
+  lowStockProducts: Product[];
   totalInventoryValue: number;
 }

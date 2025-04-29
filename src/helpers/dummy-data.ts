@@ -40257,12 +40257,7 @@ export let products = [
 ];
 
 export const totalProducts = products.length;
-export const lowStockProducts = products
-  .filter((product) => product.stock < 5)
-  .map((p) => ({
-    product: p,
-    stock: p.stock,
-  }));
+export const lowStockProducts = products.filter((product) => product.stock < 5);
 export const totalInventoryValue = products.reduce(
   (acc, currProd) => acc + currProd.stock * currProd.price,
   0

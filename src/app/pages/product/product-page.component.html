@@ -1,4 +1,11 @@
-<button pButton class="h-3rem w-6rem" (click)="goBack()">Volver</button>
+<button
+  pButton
+  class="h-3rem w-6rem"
+  aria-label="go back button"
+  (click)="goBack()"
+>
+  Volver
+</button>
 
 <ng-template [ngIf]="loading" [ngIfElse]="contentLoaded">
   <skeleton></skeleton>

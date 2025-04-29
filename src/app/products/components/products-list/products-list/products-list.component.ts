@@ -37,6 +37,7 @@ import {
   ConfirmEventType,
 } from 'primeng/api';
 import { ProductsState } from 'src/store/products/products.reducer';
+import getCategoriesNameList from 'src/app/products/helpers/get-categories-name-list';
 
 @Component({
   selector: 'products-list',
@@ -62,6 +63,7 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   filteredProducts: Product[] = [];
   localProducts: Product[] = [];
   loading = false;
+  getCategoriesNameList = getCategoriesNameList;
 
   constructor(
     private store: Store<AppState>,
@@ -206,6 +208,8 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onPageChange(event: any) {
+    console.log('event');
+    console.log(event);
     this.pageSize = event.rows;
     this.currentPage = event.first / event.rows;
     this.totalProducts = this.isFiltering()
@@ -220,11 +224,5 @@ export class ProductsListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private isFiltering() {
     return !!this.productSearchedByCategory.length;
-  }
-
-  getCategoriesNameList(categories: Category[]) {
-    return categories?.length
-      ? categories.map((category) => category.name).join(', ')
-      : '';
   }
 }

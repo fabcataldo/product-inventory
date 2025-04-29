@@ -1,0 +1,49 @@
+<div class="mt-5 container justify-content-center background">
+  <h2>Productos con Stock Bajo (menos de 5 unidades)</h2>
+  <div class="flex mt-3 justify-content-end">
+    <div class="flex col-3 w-60">
+      <input
+        #searchInputByName
+        type="text"
+        id="searchInputByName"
+        [value]="productSearchedByName"
+        placeholder="Buscar producto por nombre..."
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full h-3rem"
+      />
+    </div>
+  </div>
+
+  <p-table
+    [value]="dataSource"
+    [paginator]="true"
+    [lazy]="true"
+    [loading]="loading"
+    [rows]="pageSize"
+    [first]="currentPage * pageSize"
+    [totalRecords]="totalProducts"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    (onPage)="onPageChange($event)"
+    [rowsPerPageOptions]="[10, 25, 100]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 25%">Nombre</th>
+        <th style="width: 25%">Precio</th>
+        <th style="width: 25%">Stock Actual</th>
+        <th style="width: 25%">Categorías</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+          <span>{{ getCategoriesNameList(product.categories) }}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

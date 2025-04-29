@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
 import * as DashboardActions from './dashboard.actions';
-import { LowStockProducts } from 'src/app/dashboard/interfaces/low-stock-products.interface';
+import { Product } from 'src/app/products/interfaces/product.interface';
 
 export interface DashboardState {
   totalProducts: number;
-  lowStockProducts: LowStockProducts[];
+  lowStockProducts: Product[];
   totalInventoryValue: number;
   loading: boolean;
   error: string | null;

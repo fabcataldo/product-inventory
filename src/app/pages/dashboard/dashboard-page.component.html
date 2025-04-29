@@ -24,9 +24,17 @@
 
         <div>
           <span class="font-semibold">Productos con stock bajo:</span>
-          <!-- mostrar una lista de los productos con bajo stock, con nombre y stock actual -->
-          <div class="font-medium text-500 mb-3">
-            {{ lowStockProducts.length }} productos
+
+          <div class="flex">
+            <div class="font-medium text-500 mb-3 mr-4">
+              {{ lowStockProducts.length }} productos
+            </div>
+            <span
+              aria-label="delete button"
+              style="cursor: pointer; text-decoration: underline"
+              (click)="setShowLowStockProducts()"
+              >Ver productos</span
+            >
           </div>
         </div>
         <div>
@@ -37,5 +45,10 @@
         </div>
       </div>
     </div>
+
+    <low-cost-products
+      *ngIf="showLowStockProducts"
+      [products]="lowStockProducts"
+    ></low-cost-products>
   </ng-template>
 </div>

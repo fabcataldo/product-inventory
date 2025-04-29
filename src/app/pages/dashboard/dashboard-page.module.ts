@@ -6,6 +6,7 @@ import { DashboardPageComponent } from './dashboard-page.component';
 import { SharedComponentsModule } from 'src/app/shared/shared-components.module';
 import { OperationsModule } from 'src/app/operations/operations.module';
 import { FormsModule } from '@angular/forms';
+import { ProductsModule } from '../../products/products.module';
 
 @NgModule({
   declarations: [DashboardPageComponent],
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     SharedComponentsModule,
     OperationsModule,
     FormsModule,
+    ProductsModule,
   ],
 })
 export class DashboardPageModule {}

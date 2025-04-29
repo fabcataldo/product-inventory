@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../../interfaces/product.interface';
 import { delay, Observable, of, switchMap } from 'rxjs';
-import { products } from 'src/helpers/dummy-data';
+import { lowStockProducts, products } from 'src/helpers/dummy-data';
 import { PAGE_SIZE_GET_ALL_PRODUCTS } from '../../helpers/constants';
 import { ProductsApiResponse } from '../../interfaces/products-api.response';
 import { ProductsByCategoryApiResponse } from '../../interfaces/products-by-category-api.response';
@@ -26,6 +26,41 @@ export class ProductsService {
         return of({
           products: allProductsSlice,
           totalProducts: allProducts.length,
+          pageSize: pageSize,
+          currentPage: page,
+        });
+      })
+    );
+  }
+
+  getLowStockProducts(
+    page: number,
+    pageSize: number = PAGE_SIZE_GET_ALL_PRODUCTS,
+    searchTextByName: string
+  ): Observable<ProductsApiResponse> {
+    return of(lowStockProducts).pipe(
+      delay(1000),
+      switchMap((allLowStockProducts: Product[]) => {
+        const pageStartIdx = page * pageSize;
+        const pageEndIdx = pageStartIdx + pageSize;
+        let allLowStockProductsSlice: Product[] = allLowStockProducts.slice(
+          pageStartIdx,
+          pageEndIdx
+        );
+
+        if (searchTextByName.length) {
+          allLowStockProductsSlice = allLowStockProductsSlice.filter(
+            (product) =>
+              product.name
+                .trim()
+                .toLowerCase()
+                .includes(searchTextByName.trim().toLowerCase())
+          );
+        }
+
+        return of({
+          products: allLowStockProductsSlice,
+          totalProducts: lowStockProducts.length,
           pageSize: pageSize,
           currentPage: page,
         });

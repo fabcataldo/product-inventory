@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DashboardState } from 'src/store/dashboard/dashboard.reducer';
-import { LowStockProducts } from 'src/app/dashboard/interfaces/low-stock-products.interface';
 import { ProductsState } from 'src/store/products/products.reducer';
 import { loadDashboard } from 'src/store/dashboard/dashboard.actions';
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
+import { Router } from '@angular/router';
+import { Product } from 'src/app/products/interfaces/product.interface';
 
 @Component({
   selector: 'dashboard-page',
@@ -14,19 +15,21 @@ import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 })
 export class DashboardPageComponent implements OnInit {
   totalProducts = 0;
-  lowStockProducts: LowStockProducts[] = [];
+  lowStockProducts: Product[] = [];
   totalInventoryValue = 0;
   loading = false;
   isDarkModeSetted = false;
   stackedData: any;
   private subscriptions$ = new Subject<void>();
+  showLowStockProducts = false;
 
   constructor(
     private store: Store<{
       products: ProductsState;
       dashboard: DashboardState;
     }>,
-    private dashboardService: DashboardService
+    public dashboardService: DashboardService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -53,10 +56,17 @@ export class DashboardPageComponent implements OnInit {
         next: (chartData: any) => {
           this.stackedData = chartData;
           this.loading = false;
+
+          console.log('stackedData');
+          console.log(this.stackedData);
         },
         error: (err) => {
           console.log(err);
         },
       });
+  }
+
+  setShowLowStockProducts() {
+    this.showLowStockProducts = !this.showLowStockProducts;
   }
 }

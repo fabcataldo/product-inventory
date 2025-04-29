@@ -8,9 +8,14 @@ import { TableModule } from 'primeng/table';
 import { ProductFormModule } from './components/product-form/product-form/product-form.module';
 import { SharedComponentsModule } from '../shared/shared-components.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { LowCostProductsComponent } from './components/low-cost-products/low-cost-products.component';
 
 @NgModule({
-  declarations: [ProductsListComponent, ProductComponent],
+  declarations: [
+    ProductsListComponent,
+    ProductComponent,
+    LowCostProductsComponent,
+  ],
   imports: [
     CommonModule,
     OperationsModule,
@@ -25,6 +30,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ProductFormModule,
     ProductComponent,
     SharedComponentsModule,
+    LowCostProductsComponent,
   ],
 })
 export class ProductsModule {}
