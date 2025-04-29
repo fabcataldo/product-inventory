@@ -1,47 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { DashboardService } from '../../services/dashboard.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css'],
 })
-export class BarChartComponent implements OnInit, OnDestroy {
-  stackedData: any;
+export class BarChartComponent implements OnInit {
+  @Input() stackedData: any;
   stackedOptions: any;
-  loading = false;
-  private subscriptions$ = new Subject<void>();
-
-  constructor(private dashboardService: DashboardService) {}
-
-  ngOnDestroy(): void {
-    this.subscriptions$.next();
-    this.subscriptions$.complete();
-  }
 
   ngOnInit(): void {
-    this.loadChartData();
     this.configureChartOptions();
   }
 
-  loadChartData() {
-    this.loading = true;
-    this.dashboardService
-      .getChartData()
-      .pipe(takeUntil(this.subscriptions$))
-      .subscribe({
-        next: (chartData: any) => {
-          this.stackedData = chartData;
-          this.loading = false;
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-  }
-
-  configureChartOptions() {
+  private configureChartOptions() {
     this.stackedOptions = {
       plugins: {
         legend: {

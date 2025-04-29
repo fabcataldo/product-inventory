@@ -50,12 +50,12 @@ export class DashboardService {
       labels: allYears,
       datasets: [
         {
-          label: 'Purchases',
+          label: 'Compras',
           backgroundColor: '#42A5F5',
           data: allYears.map((year) => purchasesByYear[year] || 0),
         },
         {
-          label: 'Sales',
+          label: 'Ventas',
           backgroundColor: '#66BB6A',
           data: allYears.map((year) => salesByYear[year] || 0),
         },
