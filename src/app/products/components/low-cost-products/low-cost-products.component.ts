@@ -41,7 +41,7 @@ export class LowCostProductsComponent implements AfterViewInit, OnInit {
   loading = false;
   private subscriptions$ = new Subject<void>();
 
-  constructor(private productsService: ProductsService) {}
+  constructor(public productsService: ProductsService) {}
 
   ngOnInit(): void {
     this.getLowStockProducts();
