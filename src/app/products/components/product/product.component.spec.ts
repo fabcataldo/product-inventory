@@ -21,4 +21,17 @@ describe('ProductComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show product', () => {
+    const componentCompiled = fixture.nativeElement as HTMLElement;
+    expect(
+      componentCompiled.querySelector('#productNameDetailLabel')?.textContent
+    ).toContain('Detalles del producto Stay Amortiguador');
+    expect(
+      componentCompiled.querySelector('#productPrice')?.textContent
+    ).toContain('$998.04');
+    expect(
+      componentCompiled.querySelector('#productStock')?.textContent
+    ).toContain('69');
+  });
 });
